@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <script>
+        function sortContacts() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("contactTable");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[0];
+                    y = rows[i + 1].getElementsByTagName("TD")[0];
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Contact List</h1>
+    <button onclick="sortContacts()">Sort Alphabetically</button>
+    <table id="contactTable">
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Company</th>
+        </tr>
+        <% contacts.forEach(function(contact){ %>
+            <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.id %></td>
+                <td><%= contact.company %></td>
+            </tr>
+        <% }); %>
+    </table>
+</body>
+</html>
