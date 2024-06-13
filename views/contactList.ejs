@@ -1,0 +1,16 @@
+<h1>Contact List</h1>
+<ul>
+    <% contacts.forEach(function(contact) { %>
+        <li><%= contact.name %> - <%= contact.id %> - <%= contact.company %></li>
+    <% }); %>
+</ul>
+
+<form action="/contactList" method="post">
+    <label for="sortKey">Sort Contacts By:</label>
+    <select name="sortKey" id="sortKey">
+        <option value="name">Name</option>
+        <option value="id">ID</option>
+        <option value="company">Company</option>
+    </select>
+    <button type="submit">Sort</button>
+</form>

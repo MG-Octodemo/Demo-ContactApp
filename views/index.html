@@ -4,12 +4,23 @@
     <title>Contact App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body.dark-mode {
+            background-color: #333;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <h1>My Contact App</h1>
-    <!-- Agregar parrafo que explique las ventajas de guardar tus contactos de manera segura -->
     <p>Con esta aplicación podrás guardar tus contactos de manera segura</p>
-    <!-- Agregar boton para enviar a pagina de contactAdd -->
     <a href="/contactAdd" class="btn btn-primary">Agregar Contacto</a>
+    <a href="/contactList" class="btn btn-secondary">Ver Lista de Contactos</a>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>
