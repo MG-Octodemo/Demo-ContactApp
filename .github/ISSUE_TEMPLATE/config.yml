@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Quality Standards Documentation
+    url: /docs/ways-of-work/plan/contact-management/iso25010-quality-guide.md
+    about: Review ISO 25010 quality characteristics and validation approaches
+  - name: ISTQB Test Design Guide
+    url: /docs/ways-of-work/plan/contact-management/istqb-test-design-guide.md
+    about: Learn about ISTQB test design techniques and their application
+  - name: Test Planning Framework
+    url: /docs/ways-of-work/plan/
+    about: Access comprehensive test planning documentation and templates
