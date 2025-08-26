@@ -1,4 +1,16 @@
 {
+  "name": "demo-contactapp",
+  "version": "1.0.0",
+  "description": "Aplicación de gestión de contactos con Node.js, Express y MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node test/test_basico.js"
+  },
+  "keywords": ["contactos", "nodejs", "express", "mongodb", "api"],
+  "author": "Demo ContactApp",
+  "license": "MIT",
   "dependencies": {
     "ejs": "^3.1.9",
     "express": "^4.18.2",

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Contactos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #0056b3;
+        }
+        .add-btn {
+            background-color: #28a745 !important;
+        }
+        .add-btn:hover {
+            background-color: #1e7e34 !important;
+        }
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .contact-table th,
+        .contact-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .contact-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .contact-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .contact-table tr:hover {
+            background-color: #e8f4fd;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+            color: #000;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .no-contacts {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 40px 0;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+        .contact-count {
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Lista de Contactos</h1>
+        
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/contactos/nuevo" class="add-btn">➕ Agregar Contacto</a>
+            <a href="/api/contactos" target="_blank">Ver API JSON</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="error-message">
+                <strong>Error:</strong> <%= error %>
+            </div>
+        <% } %>
+
+        <% if (contactos && contactos.length > 0) { %>
+            <div class="contact-count">
+                Total de contactos: <strong><%= contactos.length %></strong>
+            </div>
+            
+            <table class="contact-table">
+                <thead>
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Correo Electrónico</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% contactos.forEach(function(contacto) { %>
+                        <tr>
+                            <td><%= contacto.nombre_completo %></td>
+                            <td><%= contacto.correo_electronico %></td>
+                            <td><%= contacto.numero_telefono %></td>
+                            <td><%= contacto.direccion || 'N/A' %></td>
+                            <td><%= new Date(contacto.fecha_creacion).toLocaleDateString('es-ES') %></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-edit" onclick="editarContacto('<%= contacto._id %>')">
+                                        ✏️ Editar
+                                    </button>
+                                    <button class="btn btn-delete" onclick="eliminarContacto('<%= contacto._id %>', '<%= contacto.nombre_completo %>')">
+                                        🗑️ Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="no-contacts">
+                <h3>No hay contactos registrados</h3>
+                <p>¡Comienza agregando tu primer contacto!</p>
+                <a href="/contactos/nuevo" class="nav-links" style="display: inline-block;">
+                    <span style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                        ➕ Agregar Primer Contacto
+                    </span>
+                </a>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        function editarContacto(id_contacto) {
+            // Por ahora, mostrar información del contacto en JSON
+            window.open('/api/contactos/' + id_contacto, '_blank');
+        }
+
+        function eliminarContacto(id_contacto, nombre_contacto) {
+            if (confirm('¿Estás seguro de que quieres eliminar el contacto de ' + nombre_contacto + '?')) {
+                fetch('/api/contactos/' + id_contacto, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exito) {
+                        alert('Contacto eliminado exitosamente');
+                        window.location.reload();
+                    } else {
+                        alert('Error al eliminar contacto: ' + data.mensaje);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar contacto');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
