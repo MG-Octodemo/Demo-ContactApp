@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Contactos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #0056b3;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            background-color: #e9ecef;
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Aplicación de Gestión de Contactos</h1>
+        
+        <div class="nav-links">
+            <a href="/contactos">Ver Contactos</a>
+            <a href="/contactos/nuevo">Agregar Contacto</a>
+            <a href="/api/contactos" target="_blank">API JSON</a>
+        </div>
+
+        <h2>Características de la Aplicación:</h2>
+        <ul class="feature-list">
+            <li><strong>📋 Gestión Completa:</strong> Crear, leer, actualizar y eliminar contactos</li>
+            <li><strong>🌐 API REST:</strong> Endpoints JSON completos para integración</li>
+            <li><strong>📱 Interfaz Web:</strong> Vistas HTML para gestión visual</li>
+            <li><strong>🗄️ Base de Datos:</strong> Almacenamiento persistente con MongoDB</li>
+            <li><strong>✅ Validación:</strong> Validación de datos en servidor y cliente</li>
+            <li><strong>🛡️ Manejo de Errores:</strong> Gestión robusta de errores y excepciones</li>
+        </ul>
+
+        <h2>Información Técnica:</h2>
+        <ul class="feature-list">
+            <li><strong>Backend:</strong> Node.js con Express.js</li>
+            <li><strong>Base de Datos:</strong> MongoDB con Mongoose ODM</li>
+            <li><strong>Plantillas:</strong> EJS para renderizado del lado del servidor</li>
+            <li><strong>Arquitectura:</strong> Patrón de servicios con separación de responsabilidades</li>
+        </ul>
+    </div>
+</body>
+</html>

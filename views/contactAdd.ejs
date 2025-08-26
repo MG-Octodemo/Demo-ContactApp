@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Contacto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #5a6268;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+        .required {
+            color: #dc3545;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .submit-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .form-help {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>➕ Agregar Nuevo Contacto</h1>
+        
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/contactos">Ver Contactos</a>
+        </div>
+
+        <div id="mensaje" class="message"></div>
+
+        <form id="formulario_contacto">
+            <div class="form-group">
+                <label for="nombre_completo">
+                    Nombre Completo <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="nombre_completo" 
+                    name="nombre_completo" 
+                    required 
+                    placeholder="Ej: Juan Pérez García"
+                    maxlength="100"
+                >
+                <div class="form-help">Ingresa el nombre completo del contacto</div>
+            </div>
+
+            <div class="form-group">
+                <label for="correo_electronico">
+                    Correo Electrónico <span class="required">*</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="correo_electronico" 
+                    name="correo_electronico" 
+                    required 
+                    placeholder="Ej: juan.perez@email.com"
+                    maxlength="100"
+                >
+                <div class="form-help">Debe ser una dirección de correo válida y única</div>
+            </div>
+
+            <div class="form-group">
+                <label for="numero_telefono">
+                    Número de Teléfono <span class="required">*</span>
+                </label>
+                <input 
+                    type="tel" 
+                    id="numero_telefono" 
+                    name="numero_telefono" 
+                    required 
+                    placeholder="Ej: +34 123 456 789"
+                    maxlength="20"
+                >
+                <div class="form-help">Incluye código de país si es necesario</div>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">
+                    Dirección
+                </label>
+                <textarea 
+                    id="direccion" 
+                    name="direccion" 
+                    rows="3" 
+                    placeholder="Ej: Calle Principal 123, Ciudad, País"
+                    maxlength="200"
+                ></textarea>
+                <div class="form-help">Campo opcional - Dirección completa del contacto</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="boton_enviar">
+                💾 Guardar Contacto
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const formulario = document.getElementById('formulario_contacto');
+        const boton_enviar = document.getElementById('boton_enviar');
+        const div_mensaje = document.getElementById('mensaje');
+
+        function mostrarMensaje(texto, tipo) {
+            div_mensaje.textContent = texto;
+            div_mensaje.className = `message ${tipo}`;
+            div_mensaje.style.display = 'block';
+            
+            // Ocultar mensaje después de 5 segundos si es éxito
+            if (tipo === 'success') {
+                setTimeout(() => {
+                    div_mensaje.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function limpiarFormulario() {
+            formulario.reset();
+        }
+
+        formulario.addEventListener('submit', async function(evento) {
+            evento.preventDefault();
+            
+            // Deshabilitar botón durante envío
+            boton_enviar.disabled = true;
+            boton_enviar.textContent = '⏳ Guardando...';
+            
+            // Ocultar mensajes anteriores
+            div_mensaje.style.display = 'none';
+            
+            try {
+                // Recopilar datos del formulario
+                const datos_formulario = new FormData(formulario);
+                const datos_contacto = {
+                    nombre_completo: datos_formulario.get('nombre_completo').trim(),
+                    correo_electronico: datos_formulario.get('correo_electronico').trim(),
+                    numero_telefono: datos_formulario.get('numero_telefono').trim(),
+                    direccion: datos_formulario.get('direccion').trim()
+                };
+
+                // Validación adicional en cliente
+                if (!datos_contacto.nombre_completo || !datos_contacto.correo_electronico || !datos_contacto.numero_telefono) {
+                    throw new Error('Todos los campos obligatorios deben ser completados');
+                }
+
+                // Enviar datos al servidor
+                const respuesta = await fetch('/api/contactos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datos_contacto)
+                });
+
+                const resultado = await respuesta.json();
+
+                if (resultado.exito) {
+                    mostrarMensaje('✅ Contacto creado exitosamente', 'success');
+                    limpiarFormulario();
+                    
+                    // Redirigir a la lista después de un breve retraso
+                    setTimeout(() => {
+                        window.location.href = '/contactos';
+                    }, 2000);
+                } else {
+                    mostrarMensaje('❌ Error: ' + resultado.mensaje, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error al enviar formulario:', error);
+                mostrarMensaje('❌ Error al enviar el formulario: ' + error.message, 'error');
+            } finally {
+                // Rehabilitar botón
+                boton_enviar.disabled = false;
+                boton_enviar.textContent = '💾 Guardar Contacto';
+            }
+        });
+
+        // Validación en tiempo real del email
+        document.getElementById('correo_electronico').addEventListener('input', function() {
+            const email = this.value;
+            const patron_email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !patron_email.test(email)) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ddd';
+            }
+        });
+
+        // Formateo automático del teléfono (básico)
+        document.getElementById('numero_telefono').addEventListener('input', function() {
+            let valor = this.value.replace(/\D/g, ''); // Eliminar no-dígitos
+            
+            // Formateo básico para números españoles
+            if (valor.length > 9) {
+                valor = valor.substring(0, 9);
+            }
+            
+            if (valor.length > 6) {
+                valor = valor.substring(0, 3) + ' ' + valor.substring(3, 6) + ' ' + valor.substring(6);
+            } else if (valor.length > 3) {
+                valor = valor.substring(0, 3) + ' ' + valor.substring(3);
+            }
+            
+            this.value = valor;
+        });
+    </script>
+</body>
+</html>
