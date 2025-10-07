@@ -98,8 +98,8 @@ assignees: ''
 - [ ] Test Case 6: Focus management
 
 **WCAG Compliance:**
-- Level: [A / AA / AAA]
-- Version: [2.0 / 2.1 / 2.2]
+- Level: [A / AA / AAA] (Default: AA - standard for most compliance requirements)
+- Version: [2.0 / 2.1 / 2.2] (Recommended: 2.1)
 
 #### Cross-Browser Compatibility
 - [ ] Test Case 1: Chrome (latest)

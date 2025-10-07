@@ -741,7 +741,7 @@ Total Critical Path Duration: {total SP}
 - Defect density: {threshold} defects/KLOC
 - Defect detection rate: {threshold}%
 - Defect resolution time: {average days}
-- Defect reopenrate: {threshold}%
+- Defect reopen rate: {threshold}%
 
 ### Quality Reporting
 
